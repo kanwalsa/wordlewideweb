@@ -1,0 +1,84 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+
+        <title>bootleg wordle</title>
+    </head>
+
+    <body>
+        <nav class="navbar navbar-inverse">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#">bootleg wordle by kanwal</a>
+            </div>
+          </div>
+        </nav>
+
+        <div class="container">
+
+            <div class="row">
+                -
+            </div>
+
+            <div class="row">
+                Welcome to bootleg wordle, inspired by Prof. Horstmeyer.
+            </div>
+
+            <div class="row">
+                Please send any feedback or report any bugs to Kanwal, kahmad8 at gmu.edu
+            </div>
+
+            <div class="row">
+                -
+            </div>
+
+            <div class="row">
+                Please be sure to check out the official game by Josh Wardle. He explained Wordle to be like a croissant, a "delightful snack” that is enjoyed occasionally.
+            </div>
+
+            <div class="row">
+                But sometimes croissants need to be eaten 24/7! So let's play :)
+            </div>
+
+            <div class="row">
+                -
+            </div>
+
+        </div>
+
+        <div class="container">
+
+            {% for comment in comments %}
+                <div class="row">
+                    {{ comment }}
+                </div>
+            {% endfor %}
+
+            <div class="row">
+                <form action="." method="POST">
+                    <textarea class="form-control" name="contents" placeholder="Type your 5-letter guess here"></textarea>
+                    <input type="submit" name="guess!" class="btn btn-success" value="guess!">
+                </form>
+            </div>
+
+            <div class="row">
+                <form action="." method="POST">
+                    <input type="submit" name="play again!" class="btn btn-success" value="play again!">
+                </form>
+            </div>
+
+
+        </div>
+
+    </body>
+</html>
