@@ -107,4 +107,4 @@ def index():
             return redirect(url_for('index'))
         WIN, resultdict = addcomments(bp, guess, resultdict)
 
-    return redirect(url_for('index'))
+    return redirect(url_for('index')) 
