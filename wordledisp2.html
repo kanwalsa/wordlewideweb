@@ -34,7 +34,7 @@
 
     <div class="container">
     <ul class="list-unstyled">
-    {% for comment in comments %}
+    {% for comment in commentshtml %}
             <li class="fw-light"><small>{{ comment }}</small></li>
         {% endfor %}
     </ul>
@@ -45,25 +45,34 @@
     <div class="mx-auto" style="max-width: 350px">
         <form class="form-inline" action="." method="POST">
           <div class="row">
+             <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
             <div class="col">
-              <input type="text" name = "g1" style="text-align:center" maxlength="1" class="form-control" placeholder="1">
+              <input type="text" name = "g1" style="text-align:center" maxlength="1" class="form-control" placeholder="1" data-autotab>
             </div>
 
             <div class="col">
-              <input type="text" name = "g2" style="text-align:center" maxlength="1" class="form-control" placeholder="2">
+              <input type="text" name = "g2" style="text-align:center" maxlength="1" class="form-control" placeholder="2" data-autotab>
             </div>
 
             <div class="col">
-              <input type="text" name = "g3" style="text-align:center" maxlength="1" class="form-control" placeholder="3">
+              <input type="text" name = "g3" style="text-align:center" maxlength="1" class="form-control" placeholder="3" data-autotab>
             </div>
 
             <div class="col">
-              <input type="text" name = "g4" style="text-align:center" maxlength="1" class="form-control" placeholder="4">
+              <input type="text" name = "g4" style="text-align:center" maxlength="1" class="form-control" placeholder="4" data-autotab>
             </div>
 
             <div class="col">
               <input type="text" name = "g5" style="text-align:center" maxlength="1" class="form-control" placeholder="5">
             </div>
+
+            <script>
+                $("input[data-autotab]").keyup(function() {
+                  if ($(this).attr("maxlength"))
+                    if ($(this).val().length >= $(this).attr("maxlength"))
+                      $("input").eq( $("input").index(this)+ 1 ).focus();
+                });
+            </script>
 
             <div class="mt-3"> </div>
             <div class="btn-group btn-group-sm btn-block" role="group" aria-label="Basic outlined example">
