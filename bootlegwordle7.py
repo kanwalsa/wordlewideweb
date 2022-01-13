@@ -18,7 +18,7 @@ def wordle(guess, wordle):
     for i in range(len(wordle)):
         if guess[i] == wordle[i]:
             currguess.append([guess[i].upper(), 'green'])
-            wordleedit.remove(guess[i]) # remove in case of double letters in guess
+            # wordleedit.remove(guess[i]) # remove in case of double letters in guess
         elif guess[i] in wordleedit:
             currguess.append([guess[i].upper(), 'yellow'])
             wordleedit.remove(guess[i]) # remove the first instance of that letter in case of guessing double letters
@@ -56,7 +56,7 @@ def addcomments(guess):
         wordle(guess, WORDLE)
         if guess == WORDLE:
             session['comments'].append('You got the word on try ' + str(bp) + '! Play again?')
-            session['browser'][bp] += 1
+            session['browser'][bp-1] += 1
             return True
         else:
             session['comments'].append('Game ' + str(sum(session['browser'])))
