@@ -1,4 +1,5 @@
 from flask import Flask, redirect, render_template, request, url_for
+from wordlewords import La as posswords
 import random
 
 app = Flask(__name__)
@@ -17,29 +18,21 @@ def wordle(guess, wordle, resultdict):
     for i in range(len(wordle)):
         if guess[i] == wordle[i]:
             resultstr.append(guess[i])
-            if not(guess[i] in resultdict['CORRECT']):
-                resultdict['CORRECT'].append(guess[i])
+            if not(guess[i].upper() in resultdict['CORRECT']):
+                resultdict['CORRECT'].append(guess[i].upper())
         elif guess[i] in wordle:
             resultstr.append('_')
-            if not ((guess[i] in resultdict['CORRECT']) or (guess[i] in resultdict['MOVE'])):
-                resultdict['MOVE'].append(guess[i])
+            if not ((guess[i].upper() in resultdict['CORRECT']) or (guess[i].upper() in resultdict['MOVE'])):
+                resultdict['MOVE'].append(guess[i].upper())
         else:
             resultstr.append('_')
-            if not((guess[i] in resultdict['CORRECT']) or (guess[i] in resultdict['WRONG']) or (guess[i] in resultdict['MOVE'])):
-                resultdict['WRONG'].append(guess[i])
+            if not((guess[i].upper() in resultdict['CORRECT']) or (guess[i].upper() in resultdict['WRONG']) or (guess[i].upper() in resultdict['MOVE'])):
+                resultdict['WRONG'].append(guess[i].upper())
 
     return resultdict, resultstr
 
 def getwordle():
-
-    dir = '/home/kanwalsa/mysite'
-    path = dir + '/fiveletterwords.txt'
-    f = open(path, 'r')
-
-    posswords = []
-    for line in f:
-        posswords.append(line.strip())
-    return posswords, random.sample(posswords, 1)[0]
+    return random.sample(posswords, 1)[0]
 
 def validateinput():
     gnum = []
@@ -58,9 +51,9 @@ def validateinput():
     return guess
 
 def addcomments(bp, guess, resultdict):
-        comments.append('Guess ' + str(bp)+ ': '+ guess)
+        comments.append('Guess ' + str(bp)+ ': '+ guess.upper())
         resultdict, resultstr = wordle(guess, WORDLE, resultdict)
-        comments.append('Result  ' + str(bp) + ': '+ ' '.join(resultstr))
+        comments.append('Result  ' + str(bp) + ': '+ ' '.join(resultstr).upper())
         comments.append('' + str(resultdict))
         comments.append('-')
 
@@ -70,11 +63,11 @@ def addcomments(bp, guess, resultdict):
             return True, resultdict
         if bp == 6:
             comments.append('------------- End Game -------------')
-            comments.append('You are out of tries. The word was: ' + WORDLE + '. Play again?')
+            comments.append('You are out of tries. The word was: ' + WORDLE.upper() + '. Play again?')
         return False, resultdict
 
 # start game -----------------------------------------------------------------------------------------
-posswords, WORDLE = getwordle()
+WORDLE = getwordle()
 comments = []
 bp = 0
 resultdict = {'CORRECT' : [], 'MOVE' : [], 'WRONG' : []}
@@ -84,7 +77,6 @@ def index():
     WIN = False
     global bp # this is critical
     global WORDLE
-    global posswords
     global comments
     global resultdict
 
