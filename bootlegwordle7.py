@@ -18,7 +18,7 @@ def wordle(guess, wordle):
     for i in range(len(wordle)):
         if guess[i] == wordle[i]:
             currguess.append([guess[i].upper(), 'green'])
-            wordleedit.pop(i) # remove in case of double letters in guess
+            wordleedit.remove(guess[i]) # remove in case of double letters in guess
         elif guess[i] in wordleedit:
             currguess.append([guess[i].upper(), 'yellow'])
             wordleedit.remove(guess[i]) # remove the first instance of that letter in case of guessing double letters
@@ -56,12 +56,15 @@ def addcomments(guess):
         wordle(guess, WORDLE)
         if guess == WORDLE:
             session['comments'].append('You got the word on try ' + str(bp) + '! Play again?')
+            session['browser'][bp] += 1
             return True
         else:
+            session['comments'].append('Game ' + str(sum(session['browser'])))
             session['comments'].append('Letters not tried: ' + ', '.join(session['letters']))
 
         if bp == 6:
             session['comments'].append('You are out of tries. The word was: ' + WORDLE.upper() + '. Play again?')
+            session['browser'][0] += 1
         return False
 
 
@@ -72,13 +75,15 @@ def initgame():
     session['comments'] = []
     session['guesses'] = []
     session['letters'] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+    # add a list of used words
     return None
 
  # start game -----------------------------------------------------------------------------------------
 @app.route("/", methods=["GET", "POST"])
 def index():
 
-    if not ('letters' in session):
+    if not ('browser' in session):
+        session['browser'] = [0, 0, 0, 0, 0, 0]
         initgame()
 
     if request.method == "GET":
